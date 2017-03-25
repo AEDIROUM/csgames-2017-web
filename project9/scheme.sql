@@ -1,7 +1,7 @@
 -- Professeurs
 CREATE TABLE users(
     id INTEGER NOT NULL PRIMARY KEY,
-    email TEXT,
+    username TEXT,
     password TEXT,
     name TEXT,
     bio TEXT,
@@ -27,9 +27,26 @@ CREATE TABLE history(
     user_id INTEGER NOT NULL,
     video_id INTEGER NOT NULL,
     last_date INTEGER NOT NULL
+
+create table videos (
+    title       TEXT,
+    description TEXT,
+    url         TEXT,
+    thumbnail   TEXT
 );
 
-INSERT INTO users(email, password, rank)
+create table tags (
+    id INTEGER NOT NULL PRIMARY KEY,
+    name TEXT
+);
+
+create table videos_tags (
+    video_id INTEGER,
+    tag_id   INTEGER
+);
+
+
+INSERT INTO users(username, password, rank)
        VALUES("admin", "admin", "admin"),
              ("user", "user", "user");
 
