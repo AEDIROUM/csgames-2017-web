@@ -27,4 +27,6 @@ def close_connection(exception):
     if db is not None:
         db.close()
 
+app.jinja_env.globals.update(query_db=query_db)
+
 from project9 import actions
