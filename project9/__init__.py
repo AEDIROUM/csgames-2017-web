@@ -1,7 +1,7 @@
 import sqlite3
 from flask import Flask, g
 
-app = Flask(__name__, static_url_path='')
+app = Flask(__name__)
 app.debug = True
 app.secret_key = 'rkunhffrzrag'
 

@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}Watch{% endblock %}
+
+{% block content %}
+
+<h1>{{ video.title }}</h1>
+
+<video width="470" height="255" poster="{{video.thumbnail }}" controls>
+    <source src="{{ video.url }}" type="video/mp4">
+</video>
+<p>{{ video.description }}</p>
+
+{% endblock %}
+
+{% block script %}
+    {{ super() }}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        $('table').tablesorter()
+    });
+</script>
+{% endblock %}
