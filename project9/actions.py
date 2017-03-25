@@ -16,7 +16,7 @@ def video(video_id):
 def serve_video(path):
     return send_from_directory('../videos', path)
 
-@app.route('/videos/<path:path>')
+@app.route('/thumbnails/<path:path>')
 def serve_thumbnails(path):
     return send_from_directory('../thumbnails', path)
 
