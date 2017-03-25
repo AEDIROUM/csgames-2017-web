@@ -3,35 +3,56 @@
 {% block title %}Accueil{% endblock %}
 
 {% block content %}
-<h1>Ya boooooooi</h1>
+<h1><span class="logo-new">New</span>Tube™</h1>
 <div class="container-fluid">
     <div class="jumbotron col-md-6">
-        <h1>The future is now</h1>
-        <p>Learn more about the future by continuing to live</p>
-        <button class="btn btn-primary btn-lg">Start now</button>
+        <h1>The future is <span class="logo-new">New</span>™</h1>
+        <p>All the content you <span class="logo-new">love</span> plus a lot more crap you won't be able not to binge watch !</p>
+        <a href="/register" class="btn btn-primary btn-lg">
+            Start today !
+        </a>
     </div>
-    <div class="col-md-6">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>yeah</th>
-                    <th>yeah</th>
-                    <th>yeah</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>boi</td>
-                    <td>boi</td>
-                    <td>boi</td>
-                </tr>
-                <tr>
-                    <td>aboi</td>
-                    <td>aboi</td>
-                    <td>aboi</td>
-                </tr>
-            </tbody>
-        </table>
+    <div id="accueil-latest" class="col-md-6">
+        <div>
+            <h2>Derniers visionnages</h2>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <img src="{{ url_for('static', filename='img/thumbs/drone.png') }}" alt="drone" />
+                    <span class="badge">14</span>
+                    Cras justo odio
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">14</span>
+                    Cras justo odio
+                </li>
+            </ul>
+        </div>
+        <div>
+            <h2>Vidéos populaires</h2>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <span class="badge">14</span>
+                    Cras justo odio
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">14</span>
+                    Cras justo odio
+                </li>
+            </ul>
+        </div>
+        <div>
+            <h2>Vidéos récentes</h2>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <span class="badge">14</span>
+                    Cras justo odio
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">14</span>
+                    Cras justo odio
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
 {% endblock %}
