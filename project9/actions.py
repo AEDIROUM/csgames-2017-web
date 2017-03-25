@@ -25,6 +25,17 @@ def search():
 
     return jsonify(success=True, questions=questions, categories=categories, cours=cours, partie_cours=parties_cours)
 
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.form:
+        query_db('insert into users (email, password) values (?, ?)',
+                (request.form['email'], request.form['password']))
+    return render_template('register.html')
+
+@app.route('/users')
+def users():
+    return render_template('users.html', users=query_db('select * from users'))
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.form:
