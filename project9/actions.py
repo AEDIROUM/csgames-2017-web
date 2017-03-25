@@ -1,5 +1,5 @@
 from project9 import app, query_db
-from flask import request, redirect, url_for, render_template, g, jsonify, flash, session
+from flask import request, redirect, url_for, render_template, g, jsonify, flash, session, send_from_directory
 import random
 
 
@@ -11,6 +11,14 @@ def index():
 @app.route("/video/<int:video_id>")
 def video(video_id):
     return render_template('video.html', video=query_db('SELECT * FROM videos WHERE id=?', video_id).fetchone())
+
+@app.route('/videos/<path:path>')
+def serve_video(path):
+    return send_from_directory('../videos', path)
+
+@app.route('/videos/<path:path>')
+def serve_thumbnails(path):
+    return send_from_directory('../thumbnails', path)
 
 @app.route("/search")
 def search():
