@@ -8,6 +8,12 @@ def index():
 
     return render_template('index.html', test=1)
 
+
+@app.route("/video/<int:video_id>")
+def video(video_id):
+    return render_template('video.html', video=query_db('SELECT * FROM videos WHERE id=?', video_id).fetchone())
+
+
 @app.route("/search", methods=['POST'])
 def search():
 
