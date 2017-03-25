@@ -1,5 +1,5 @@
 from project9 import app, query_db
-from flask import request, redirect, url_for, render_template, g, jsonify, flash
+from flask import request, redirect, url_for, render_template, g, jsonify, flash, session
 import random
 
 
@@ -41,8 +41,10 @@ def login():
     if request.form:
         cur = query_db('select * from users where email = ? and password = ?',
                 (request.form['email'], request.form['password']))
-        if cur.fetchone():
-            return redirect('home.html')
+        user = cur.fetchone()
+        if user:
+            session['user'] = user['id']
+            return redirect(url_for('index'))
         else:
             flash('Login attempt fail!')
     return render_template('login.html')
