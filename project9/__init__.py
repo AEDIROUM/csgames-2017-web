@@ -18,7 +18,7 @@ def get_db():
         db.row_factory = dict_factory
     return db
 
-def query_db(query, args=(), one=False):
+def query_db(query, *args):
     return get_db().execute(query, args)
 
 @app.teardown_appcontext

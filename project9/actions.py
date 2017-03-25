@@ -28,8 +28,9 @@ def search():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.form:
-        query_db('insert into users (email, password) values (?, ?)',
-                (request.form['email'], request.form['password']))
+        query_db('insert into users (username, password) values (?, ?)',
+                request.form['username'], request.form['password'])
+        return redirect(url_for('login'))
     return render_template('register.html')
 
 @app.route('/users')
@@ -39,8 +40,8 @@ def users():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.form:
-        cur = query_db('select * from users where email = ? and password = ?',
-                (request.form['email'], request.form['password']))
+        cur = query_db('select * from users where username = ? and password = ?',
+                request.form['username'], request.form['password'])
         user = cur.fetchone()
         if user:
             session['user'] = user['id']
@@ -52,7 +53,7 @@ def login():
 @app.route('/prof/', methods=['GET', 'POST'])
 def prof():
     if 'nom' in request.form and 'pwd' in request.form and 'prenom' in request.form:
-        prof = query_db("SELECT * FROM professeurs WHERE nom=? AND mot_de_passe=? AND prenom=?", (request.form['username'], request.form['password']))
+        prof = query_db("SELECT * FROM professeurs WHERE nom=? AND mot_de_passe=? AND prenom=?", request.form['username'], request.form['password'])
         if len(prof) == 1:
             pass
 
