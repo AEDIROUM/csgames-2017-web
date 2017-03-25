@@ -8,22 +8,10 @@ def index():
 
     return render_template('index.html', test=1)
 
-@app.route("/search", methods=['POST'])
+@app.route("/search")
 def search():
-
-    pattern = request.form['pattern']
-    op = ' AND ' if request.form['all'] == 'true' else ' OR '
-    if not pattern:
-        return jsonify(success=True)
-
-    words = list(map(str.lower, map(lambda x: x if '%' in x else '%' + x + '%', pattern.split(' '))))
-
-    questions = query_db('SELECT id, content AS text FROM questions WHERE ' + op.join(['LOWER(content) LIKE ?' for i in range(len(words))]) + ' LIMIT 10', words)
-    categories = query_db('SELECT id, name AS text FROM categories WHERE ' + op.join(['LOWER(name) LIKE ?' for i in range(len(words))]) + ' LIMIT 10', words)
-    cours = query_db('SELECT sigle AS id, name AS text FROM cours WHERE ' + op.join(['LOWER(name) LIKE ?' for i in range(len(words))]) + ' LIMIT 10', words)
-    parties_cours = query_db('SELECT id, name AS text FROM partie_cours WHERE ' + op.join(['LOWER(name) LIKE ?' for i in range(len(words))]) + ' LIMIT 10', words)
-
-    return jsonify(success=True, questions=questions, categories=categories, cours=cours, partie_cours=parties_cours)
+    query = '%{}%'.format(request.args['query'])
+    return render_template('search.html', results=query_db('select * from videos where description like ? or title like ?', query, query))
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
