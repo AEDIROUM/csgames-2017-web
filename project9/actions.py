@@ -37,6 +37,10 @@ def register():
 def users():
     return render_template('users.html', users=query_db('select * from users'))
 
+@app.route('/user/<int:user_id>')
+def user(user_id):
+    return render_template('user.html', user=query_db('select * from users where id = ?', user_id).fetchone())
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.form:
