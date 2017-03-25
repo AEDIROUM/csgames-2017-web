@@ -36,6 +36,11 @@
         </div>
     </header>
     <div class="ui container" id="content">
+      {% for message in get_flashed_messages() %}
+      <div class="message">
+        {{ message }}
+      </div>
+      {% endfor %}
         {% block content %}{% endblock %}
         <footer class="ui" style="text-align: center; margin-top: 25px">
             {% block footer %}
