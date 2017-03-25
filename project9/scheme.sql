@@ -27,6 +27,7 @@ CREATE TABLE history(
     user_id INTEGER NOT NULL,
     video_id INTEGER NOT NULL,
     last_date INTEGER NOT NULL
+);
 
 create table videos (
     id integer not null primary key,
