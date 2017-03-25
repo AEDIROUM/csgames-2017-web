@@ -50,6 +50,12 @@ def login():
             flash('Login attempt fail!')
     return render_template('login.html')
 
+@app.route('/logout')
+def logout():
+    del session['user']
+    flash('You\'ve been logged out!')
+    return redirect(url_for('index'))
+
 @app.route('/prof/', methods=['GET', 'POST'])
 def prof():
     if 'nom' in request.form and 'pwd' in request.form and 'prenom' in request.form:
