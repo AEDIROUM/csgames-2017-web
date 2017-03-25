@@ -8,17 +8,11 @@ def index():
 
     return render_template('index.html', test=1)
 
-<<<<<<< HEAD
-
 @app.route("/video/<int:video_id>")
 def video(video_id):
     return render_template('video.html', video=query_db('SELECT * FROM videos WHERE id=?', video_id).fetchone())
 
-
-@app.route("/search", methods=['POST'])
-=======
 @app.route("/search")
->>>>>>> 493056710fa6db91d798f2fa3c532a9bb46b4482
 def search():
     query = '%{}%'.format(request.args['query'])
     return render_template('search.html', results=query_db('select * from videos where description like ? or title like ?', query, query))
