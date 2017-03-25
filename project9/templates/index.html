@@ -1,0 +1,149 @@
+{% extends "layout.html" %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block content %}
+    <h2 class="ui dividing header">Questions aléatoires à choix multiples</h2>
+    <div class="ui two columns grid" style="position: relative">
+        <div class="ui column">
+            <h3 class="ui dividing header">Par cours</h3>
+            <div class="ui accordion" style="padding-left: 10px">
+                {% for cours in courses %}
+                    <div class="title">
+                        <i class="student icon"></i>
+                        {{ cours["name"] }}
+                        <small>({{ cours["sigle"] }})</small>
+                    </div>
+                    <div class="ui list content" style="margin-top: 10px; margin-bottom: 10px">
+                        {% for partie in parties[cours["sigle"]] %}
+                            <div class="item" style="margin-left: 15px">
+                                - <a href="/question/partie_cours/{{partie['id']}}">
+                                    {{ partie["name"] }}
+                                  </a>
+                            </div>
+                        {% endfor %}
+                        <div class="item" style="margin-left: 15px; margin-top: 10px">
+                            <a href="/question/cours/{{cours['sigle']}}">
+                                <i class="angle double right icon"></i> Toutes les questions du cours
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="ui column">
+            <h3 class="ui dividing header">Par catégorie</h3>
+            <div style="padding-left: 10px">
+                {% set previous = 0 %}
+                {% for categorie in categories %}
+                    <div data-level="{{ categorie['level'] }}" style="padding-left: {{ (categorie['level'] + 1) * 15}}px">
+                        <i class="tag icon"></i>
+                        <a href="/question/categories/{{categorie['id']}}">
+                            {{ categorie["name"] }}
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="ui segment" id="search">
+        <h2>Rechercher des questions</h2>
+        <div class="ui form" style="width: 50%; margin-left: 25%;">
+            <div class="field">
+                <label>Entrez les mots-clés qui vous intéressent</label>
+                <input id="search-pattern" type="text" placeholder="ex.: algèbre relationnel" oninput="search()" autocomplete="off">
+            </div>
+            <div class="field">
+              <div class="search-and ui toggle checkbox">
+                <input class="hidden" tabindex="0" name="gift" type="checkbox">
+                <label>Afficher seulement les résultats contenant tous les mots-clés</label>
+              </div>
+            </div>
+        </div>
+        <br />
+        <div class="ui four columns grid">
+            <div class="ui column">
+                <table class="ui column celled table" id="search-questions">
+                    <thead>
+                        <tr>
+                            <th colspan="2">Questions trouvées</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="ui column">
+                <table class="ui celled table" id="search-categories">
+                    <thead>
+                        <tr>
+                            <th colspan="2">Catégories trouvées</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="ui column">
+                <table class="ui celled table" id="search-cours">
+                    <thead>
+                        <tr>
+                            <th colspan="2">Cours trouvés</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="ui column">
+                <table class="ui celled table" id="search-partie_cours">
+                    <thead>
+                        <tr>
+                            <th colspan="2">Parties de cours trouvées</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    {{ super() }}
+    <script>
+        $('.ui.accordion').accordion();
+        $('.ui.checkbox').checkbox({
+            onChange: search
+        });
+
+        function search() {
+            var pattern = $("#search-pattern").val();
+            
+            var options = {pattern: pattern};
+            options.all = $('.ui.checkbox.search-and').checkbox('is checked');
+            
+            $.post('/search', options).done(function(data) {
+                if(!('success' in data)) {
+                    return;
+                }
+                
+                ['partie_cours', 'cours', 'questions', 'categories'].forEach(function(key) {
+                    var $table = $('#search-' + key);
+                    var body = $table.find('tbody');
+                    body.empty();
+                    
+                    if(key in data) {
+                        data[key].forEach(function(e, k) {
+                            body.append(
+                                '<tr><td>' + (k+1) + '</td>' +
+                                '<td><a href="/question/' + key + '/' + e.id + '">' + e.text + '</a></td></tr>'
+                            );
+                        });
+                    }
+                });
+            });
+        }
+    </script>
+{% endblock %}

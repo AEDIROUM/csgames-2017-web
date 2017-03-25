@@ -1,0 +1,96 @@
+{% extends "layout.html" %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block content %}
+    <h2>Bonjour, {{prof['prenom']}} {{prof['nom']}} !</h2>
+    <div class="ui two columns grid">
+        <div class="ui column">
+            <h3>Vos cours</h3>
+            <table class="ui celled table">
+                <thead>
+                    <tr>
+                        <th>Sigle</th>
+                        <th>Nom</th>
+                        <th>Nombre de questions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cours in courses %}
+                        <tr>
+                            <td>{{cours['sigle']}}</td>
+                            <td><a href="/question/cours/{{cours['id']}}">{{cours['name']}}</a></td>
+                            <td>{{cours['nbr_questions']}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <h3>Vos collègues</h3>
+            <table class="ui celled table">
+                <thead>
+                    <tr>
+                        <th>Professeur</th>
+                        <th>Sigle</th>
+                        <th>Cours</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for prof in collegues %}
+                        <tr>
+                            <td>{{prof['prenom']}} {{prof['nom']}}</td>
+                            <td>{{prof['sigle']}}</td>
+                            <td>{{prof['name']}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="ui column">
+            <h3>Mes questions</h3>
+            <div id="rate" class="ui large progress" data-percent="{{(moyenne_reussite['average_reussite'] or 100) | round(2) }}">
+                <div class="bar"></div>
+                <div class="label">Taux de réussite moyen des questions: {{(moyenne_reussite["average_reussite"] or 100) | round(2) }} %</div>
+            </div>
+            <br />
+            <h4>Taux de réussite par question</h4>
+            {% for cours in courses %}
+                <h5>{{cours["sigle"]}} - {{cours["name"]}}</h5>
+                {% for taux_reussite_question in taux_reussite_questions_cours[cours["sigle"]] %}
+                    <div class="ui small progress" data-percent="{{taux_reussite_question[1]}}" data-answers="{{taux_reussite_question[3]}}">
+                        <div class="bar"></div>
+                        <div class="label">
+                            <abbr title="{{taux_reussite_question[0]}}">
+                                {{taux_reussite_question[2]}}
+                            </abbr>
+                            ({{taux_reussite_question[1]}} % sur {{taux_reussite_question[3]}} réponses)
+                        </div>
+                    </div>
+                    <br />
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    {{super()}}
+    <script>
+        $(function() {
+            $('.ui.progress').each(function() {
+                var val = 'red';
+
+                if($(this).data('percent') > 80) {
+                    val = 'green';
+                } else if($(this).data('percent') > 50) {
+                    val = 'yellow';
+                }
+
+                if($(this).data('answers') == 0) {
+                    val = "";
+                }
+
+                $(this).addClass(val).progress();
+            });
+        });
+    </script>
+{% endblock %}

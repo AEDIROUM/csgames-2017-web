@@ -1,0 +1,7 @@
+{
+  "name": "gud-staff",
+  "dependencies": {
+    "jquery": "*",
+    "bootstrap": "*"
+  }
+}

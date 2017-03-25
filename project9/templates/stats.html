@@ -1,0 +1,98 @@
+{% extends "layout.html" %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block content %}
+
+    <h2>Statistiques</h2>
+    <div class="ui two columns grid">
+        <div class="ui column">
+            <h3>Statistiques du site</h3>
+            {% for stat in stats %}
+                <h3>{{stat[0]}}</h3>
+                <table class="ui celled table">
+                    <thead>
+                        <tr>
+                            {% for key in stat[1][0].keys() %}
+                                <th>{{key}}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in stat[1] %}
+                            <tr>
+                                {% for col in row %}
+                                    <td>{{row[col]}}</td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endfor %}
+        </div>
+        <div class="ui column">
+            <h3>Mes statistiques</h3>
+            <div id="rate" class="ui large progress">
+                <div class="bar"></div>
+                <div class="label">Taux de réussite : <span class="score-placeholder"></span>%</div>
+            </div>
+            <br />
+            <div id="good" class="ui small green progress">
+                <div class="bar"></div>
+                <div class="label">Nombre de bonne réponses : <span class="good-placeholder"></span></div>
+            </div>
+            <div id="bad" class="ui small red progress">
+                <div class="bar"></div>
+                <div class="label">Nombre d'échecs : <span class="bad-placeholder"></span></div>
+            </div>
+            <div id="message-green" class="ui success message">
+                <strong>Félicitation !</strong>
+                <p>Vous êtes sur une bonne voie, continuez le bon travail !</p>
+            </div>
+            <div id="message-yellow" class="ui warning message">
+                <strong>C'est bien...</strong>
+                <p>Vous êtes sur une bonne voie, continuez à travailler sur vos cours et vos notes en seront récompensées !</p>
+            </div>
+            <div id="message-red" class="ui error message">
+                <strong>Attention !</strong>
+                <p>Vous devriez vous remettre au travail, votre taux de succès est dangeureusement bas !</p>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    {{ super() }}
+    <script>
+        $(function() {
+            $('.message').hide();
+
+            var val = 'red';
+
+            if(user_score() > 80) {
+                val = 'green';
+            } else if(user_score() > 50) {
+                val = 'yellow';
+            }
+
+            $('#rate').addClass(val).progress({
+                percent: user_score()
+            });
+
+            var good = parseInt(localStorage.getItem('good') || 0);
+            var bad = parseInt(localStorage.getItem('bad') || 0);
+
+            $('#good').progress({
+                percent: good / ((good + bad) || 1) * 100
+            });
+            $('.good-placeholder').text(good);
+            
+            $('#bad').progress({
+                percent: bad / ((good + bad) || 1) * 100
+            });
+            $('.bad-placeholder').text(bad);
+            $('#message-' + val).show();
+        });
+    </script>
+{% endblock %}

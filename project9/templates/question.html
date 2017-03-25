@@ -1,0 +1,96 @@
+{% extends "layout.html" %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block content %}
+
+<div class="ui two columns grid">
+    <div class="ui column">
+        <div class="ui form segment" id="question_card">
+            <h2 class="dividing header">{{question["content"]}}</h2>
+            <div class="content">
+                <div class="grouped fields">
+                    {% for reponse in reponses %}
+                        <div class="field">
+                            <div class="radio checkbox">
+                                <label><input data-vrai="{{reponse['vrai']}}" name="frequency" type="radio"> {{reponse["texte"]}}</label>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <button class="ui primary button" type="submit" onclick="validate()">
+                    Confirmer
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="ui column">
+        <div class="ui fluid card" style="width: 300px; margin: auto">
+            <div class="image">
+                <img id="img" style="width: 300px; height: 300px" src="{{ url_for('static', filename='img/wut.jpg') }}" style="  animation-name: spinner; 
+  animation-timing-function: linear; 
+  animation-iteration-count: infinite; 
+  animation-duration: 2s; ">
+            </div>
+            <div class="content">
+                <p id="waiting">Veuillez sélectionner une réponse</p>
+                <p id="good" class="ui success message"><strong>Yay !</strong> Vous avez choisi la bonne réponse !</p>
+                <p id="bad" class="ui error message"><strong>Nay !</strong> Vous avez choisi la mauvaise réponse !</p>
+                <a id="next" class="ui primary button" onclick="next()">Prochaine question <i class="right arrow icon"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+    {{ super() }}
+    <style>
+    @keyframes rotate360 {
+      to { transform: rotateZ(360deg) rotateX(360deg); }
+    }
+
+    </style>
+    <script>
+        var url = "{{ url_for('static', filename='img/') }}";
+        var num = ''; //Math.floor((Math.random() * 10) % 3) + 1;
+        var validated = false;
+        
+        $(function() {
+            $('#good, #bad, #next').hide();
+            $('*').prop('disabled', false);
+        });
+        
+        function validate() {
+            if(validated) {
+                return
+            }
+            validated = true;
+            $('input, button').prop('disabled', true);
+            $('#waiting').slideUp();
+            
+            var val = $('input:checked').data('vrai') ? 'good' : 'bad';
+            
+            $.get('/' + val + '/' + {{question['id']}}, function() {});
+            
+            localStorage.setItem(val, parseInt(localStorage.getItem(val)||0) + 1);
+            
+            update_score();
+            
+            $('#' + val).slideDown();
+            $('#img')
+                .attr('src', url + val + num + '.jpg')
+                .css({
+                    'filter': 'sepia(1) saturate(4) contrast(2) hue-rotate(' + (val == 'bad' ? -50 : 50) + 'deg)',
+                    'transition': '0s'
+                });
+            
+            $('#next').slideDown();
+        }
+        
+        function next() {
+            window.location.reload();
+        }
+    </script>
+{% endblock %}
