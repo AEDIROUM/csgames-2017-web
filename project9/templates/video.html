@@ -49,6 +49,13 @@
             {% else %}
             <p>Sorry, no comments</p>
             {% endfor %}
+            {% if session.user %}
+            <form method="post">
+              <label>Add a new comment</label>
+              <textarea class="form-control" name="content"></textarea>
+              <button class="btn btn-primary">Comment</button>
+            </form>
+            {%endif %}
         </div>
     </div>
 
