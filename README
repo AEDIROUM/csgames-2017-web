@@ -1,4 +1,12 @@
-Features!
+# Installation
+
+Il suffit de rouler 'install.sh' et 'run.sh' pour démarrer l'application écrite
+sur Flask. Attention, l'app roule sur le port 3000 et non 8080!
+
+Vous pouvez déposer les vidéos et thumbnails dans les répertoires `videos` et
+`thumbnails`.
+
+# Features!
 
  - créer un utilisateur
  - connexion et déconnexoin
