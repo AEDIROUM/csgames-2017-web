@@ -13,7 +13,7 @@
     </thead>
     <tbody>
         {% for result in results %}
-        <tr>
+        <tr data-id="{{ result.id }}">
             <td><img style="max-width: 50px" src="{{ result['thumbnail'] }}" /></td>
             <td>{{ result['title'] }}</td>
             <td>{{ result['description'] }}</td>

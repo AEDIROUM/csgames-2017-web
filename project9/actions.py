@@ -16,7 +16,7 @@ def video(video_id):
 
     query_db('INSERT INTO history(user_id, video_id) VALUES(?, ?)', user_id, video_id)
 
-    return render_template('video.html', video=query_db('SELECT * FROM videos WHERE id=?', video_id).fetchone())
+    return render_template('video.html', video=query_db('SELECT *, group_concat(tag) as tags FROM videos left outer join video_tags on id = video_tags.video_id WHERE id=?', video_id).fetchone())
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
