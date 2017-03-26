@@ -12,7 +12,9 @@ CREATE TABLE users(
 CREATE TABLE messages(
     id INTEGER NOT NULL PRIMARY KEY,
     user_id INTEGER NOT NULL,
-    content TEXT
+    from_user_id INTEGER NOT NULL,
+    content TEXT,
+    last_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE comments(
@@ -102,3 +104,7 @@ insert into videos (title, description, url, thumbnail) values (
 
 INSERT INTO comments
 VALUES(NULL, 1, 1, "wesh tro chelou mec put1 la viiiiid de sa mere");
+
+INSERT INTO messages(user_id, from_user_id, content)
+       VALUES(1, 1, "wesh kévin ces kévin on se conné ptd r!!1"),
+             (1, 2, "Excuse-moi petit, mais tu devrais soigner ton orthographe...");

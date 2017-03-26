@@ -51,7 +51,9 @@
         </div><!-- /.container-fluid -->
     </nav>
     <div class="container-fluid" id="content">
-        {% block content %}{% endblock %}
+        <div class="col-md-10 col-md-offset-1">
+            {% block content %}{% endblock %}
+        </div>
         <footer class="text-center">
             {% block footer %}
             <strong><span class="logo-new">New</span>Tube</strong> - A CSGames 2017 WebSite

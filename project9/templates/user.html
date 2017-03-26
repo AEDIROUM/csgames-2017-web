@@ -1,26 +1,55 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-{{  user }}
 {% if 'edit' in request.args %}
 mode édition
 <form method="post">
-  <div class="form-input">
-    <label>Name</label>
-    <input class="form-control" name="name" value="{{ user.name }}">
-  </div>
-  <div class="form-input">
-    <label>Biography</label>
-    <textarea class="form-control" name="bio">{{ user.bio }}</textarea>
-  </div>
-  <button class="btn btn-primary" type="submit">Edit Profile</button>
+    <div class="form-input">
+        <label>Name</label>
+        <input class="form-control" name="name" value="{{ user.name }}">
+    </div>
+    <div class="form-input">
+        <label>Biography</label>
+        <textarea class="form-control" name="bio">{{ user.bio }}</textarea>
+    </div>
+    <button class="btn btn-primary" type="submit">Edit Profile</button>
 </form>
 {% else %}
-<h2>{{ user.name }}</h2>
-<img src="{{ user.photo }}">
-<h3>Biography</h3>
-<p>{{ user.bio }}</p>
 
-<a class="btn btn-primary" href="?edit">Edit Profile</a>
+<div class="row">
+    <div class="col-md-6">
+        <h2>{{ user.name }} <small><span class="label label-primary">{{ user.rank }}</span></small></h2>
+        {% if user.photo %}
+        <img src="{{ user.photo }}">
+        {% endif %}
+        <h3>Biography</h3>
+        <p>{{ user.bio }}</p>
+
+        <a class="btn btn-primary" href="?edit">Edit Profile</a>
+    </div>
+    <div class="col-md-6 comments">
+        <h3>My Messages</h3>
+        {% for message in query_db('SELECT * FROM messages JOIN users AS user ON user.id=messages.from_user_id WHERE user_id=? ORDER BY last_date DESC', user.id) %}
+        <div class="media">
+            {% if message.photo %}
+            <div class="media-left">
+                <a href="#">
+                    <img class="media-object" src="{{message.photo}}">
+                </a>
+            </div>
+            {% endif %}
+            <div class="media-body">
+                <h4 class="media-heading">{{message.name}}</h4>
+                {{message.content}}
+            </div>
+        </div>
+        {% else %}
+        <p>Sorry, no comments</p>
+        {% endfor %}
+        <form action="/message">
+            
+        </form>
+    </div>
+</div>
 {% endif %}
 {%endblock %}
