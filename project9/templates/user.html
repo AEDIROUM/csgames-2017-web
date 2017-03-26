@@ -2,11 +2,10 @@
 
 {% block content %}
 {% if 'edit' in request.args %}
-mode édition
 <form method="post">
     <div class="form-input">
         <label>Name</label>
-        <input class="form-control" name="name" value="{{ user.name }}">
+        <input class="form-control" name="name" value="{{ user.name }}" required>
     </div>
     <div class="form-input">
         <label>Biography</label>
