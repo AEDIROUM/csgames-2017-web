@@ -1,8 +1,9 @@
 from project9 import app, query_db
 from flask import request, redirect, url_for, render_template, g, jsonify, flash, session, send_from_directory
+from werkzeug.utils import secure_filename
 import random
 import time
-
+import os
 
 @app.route("/")
 def index():
@@ -14,8 +15,19 @@ def video(video_id):
     user_id = session['user'] if 'user' in session else None
 
     query_db('INSERT INTO history(user_id, video_id) VALUES(?, ?)', user_id, video_id)
-    
+
     return render_template('video.html', video=query_db('SELECT * FROM videos WHERE id=?', video_id).fetchone())
+
+@app.route('/upload', methods=['GET', 'POST'])
+def upload():
+    if request.form:
+        print(request.files)
+        file = request.files['video']
+        file.save(os.path.join('videos', secure_filename(file.filename)))
+        cur = query_db('insert into videos (title, description, url) values (?, ?, ?)',
+                request.form['title'], request.form['description'], 'http://localhost:3000/videos/' + secure_filename(file.filename))
+        return redirect(url_for('video', video_id=cur.lastrowid))
+    return render_template('upload.html')
 
 @app.route('/videos/<path:path>')
 def serve_video(path):

@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+  <input name="title">
+  <textarea name="description"></textarea>
+  <input type="file" name="video">
+  <button>Upload</button>
+</form>
+{% endblock %}
