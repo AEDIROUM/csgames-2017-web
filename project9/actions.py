@@ -1,5 +1,5 @@
 from project9 import app, query_db
-from flask import request, redirect, url_for, render_template, g, jsonify, flash, session
+from flask import request, redirect, url_for, render_template, g, jsonify, flash, session, send_from_directory
 import random
 
 
@@ -12,10 +12,18 @@ def index():
 def video(video_id):
     return render_template('video.html', video=query_db('SELECT * FROM videos WHERE id=?', video_id).fetchone())
 
+@app.route('/videos/<path:path>')
+def serve_video(path):
+    return send_from_directory('../videos', path)
+
+@app.route('/thumbnails/<path:path>')
+def serve_thumbnails(path):
+    return send_from_directory('../thumbnails', path)
+
 @app.route("/search")
 def search():
     query = '%{}%'.format(request.args['query'])
-    return render_template('search.html', results=query_db('select * from videos where description like ? or title like ?', query, query))
+    return render_template('search.html', results=query_db('select *, group_concat(tag) as tags from videos join video_tags on id = video_tags.video_id where description like ? or title like ? group by id', query, query))
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
