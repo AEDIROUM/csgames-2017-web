@@ -38,7 +38,7 @@
 
     <div class="col-md-4 more-videos">
         <h3>While you're at it, why don't you watch all those videos too ?</h3>
-        {% for video in query_db('SELECT * FROM videos AS video WHERE video.id != ? ORDER BY RANDOM() DESC LIMIT 5', video.id) %}
+        {% for video in query_db('SELECT *, video.id AS id FROM videos AS video WHERE video.id != ? ORDER BY RANDOM() DESC LIMIT 5', video.id) %}
         <div class="media"  data-id="{{ video.id }}">
             <span class="badge pull-right">{{ query_db('SELECT COUNT(*) AS n FROM history WHERE video_id=?', video.id).fetchone()['n'] }}</span>
             {% if True %}

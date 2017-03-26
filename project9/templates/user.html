@@ -17,7 +17,7 @@ mode édition
 {% else %}
 
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-4">
         <h2>{{ user.name }} <small><span class="label label-primary">{{ user.rank }}</span></small></h2>
         {% if user.photo %}
         <img src="{{ user.photo }}">
@@ -27,7 +27,7 @@ mode édition
 
         <a class="btn btn-primary" href="?edit">Edit Profile</a>
     </div>
-    <div class="col-md-6 comments">
+    <div class="col-md-4 comments">
         <h3>My Messages</h3>
         {% for message in query_db('SELECT * FROM messages JOIN users AS user ON user.id=messages.from_user_id WHERE user_id=? ORDER BY last_date DESC', user.id) %}
         <div class="media">
@@ -46,9 +46,40 @@ mode édition
         {% else %}
         <p>Sorry, no comments</p>
         {% endfor %}
-        <form action="/message">
+        <hr>
+        <form action="/message" method="POST">
+            <input type="search" class="form-control" placeholder="John Smith" list="names" name="username">
+            <datalist id="names">
+                {% for user in query_db('SELECT username FROM users') %}
+                <option value="{{ user.username}}">
+                    {% endfor %}
+            </datalist>
             
+            <textarea name="content" class="form-control"></textarea>
+            <br>
+            <button type="submit" class="btn btn-success">
+                Nouveau message
+            </button>
         </form>
+    </div>
+    <div class="col-md-4 more-videos">
+        <h2>Last seen videos</h2>
+        {% for video in query_db('SELECT * FROM videos AS video JOIN history AS hist ON hist.video_id=video.id AND hist.user_id=? ORDER BY last_date DESC LIMIT 3', user.id) %}
+        
+        <div class="media" data-id="{{ video.id }}">
+            {% if True %}
+            <div class="media-left">
+                <a href="#">
+                    <img class="media-object" style="max-width: 90px" src="{{ video.thumbnail }}" />
+                </a>
+            </div>
+            {% endif %}
+            <div class="media-body">
+                <h4 class="media-heading">{{ video.title }}</h4>
+                {{ video.description }}
+            </div>
+        </div>
+        {% endfor %}
     </div>
 </div>
 {% endif %}

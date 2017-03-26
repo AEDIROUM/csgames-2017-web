@@ -47,8 +47,8 @@ create table video_tags (
 
 
 INSERT INTO users(username, password, rank, name, bio)
-       VALUES("admin", "admin", "admin", "Kévin", "jeune boloss parisiien du 64 wesh tro cho le mek tavu"),
-             ("user", "user", "user", "Bernard Pivot", "Bernard Pivot, né le 5 mai 1935 à Lyon dans le Rhône, est un journaliste français, animateur d'émissions culturelles à la télévision.");
+       VALUES("kevin", "admin", "admin", "Kévin", "jeune boloss parisiien du 64 wesh tro cho le mek tavu"),
+             ("pivot.b84", "user", "user", "Bernard Pivot", "Bernard Pivot, né le 5 mai 1935 à Lyon dans le Rhône, est un journaliste français, animateur d'émissions culturelles à la télévision.");
 
 
 

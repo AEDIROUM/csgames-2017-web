@@ -18,6 +18,21 @@ def video(video_id):
 
     return render_template('video.html', video=query_db('SELECT * FROM videos WHERE id=?', video_id).fetchone())
 
+@app.route("/message", methods=['POST'])
+def message():
+    if not session['user']:
+        return redirect(url_for('index'))
+
+    try:
+        query_db('INSERT INTO messages(user_id, from_user_id, content) VALUES((SELECT id FROM users WHERE username=?), ?, ?)', request.form['username'], session['user'], request.form['content'])
+    except Exception:
+        # PokéCatch : Gotta catch'em all !
+        pass
+                   
+    
+    return redirect(url_for('user', user_id=session['user']))
+
+
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
     if request.form:
