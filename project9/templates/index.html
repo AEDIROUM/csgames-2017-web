@@ -15,17 +15,20 @@
     <div id="accueil-latest" class="col-md-6">
         <div>
             <h2>Derniers visionnages</h2>
-            <ul class="list-group">
-                <li class="list-group-item">
-                    <img src="{{ url_for('static', filename='img/thumbs/drone.png') }}" alt="drone" />
+            <div class="media">
+                {% if True %}
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object" src="src="{{ url_for('static', filename='img/thumbs/drone.png') }}>
+                    </a>
                     <span class="badge">14</span>
-                    Cras justo odio
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">14</span>
-                    Cras justo odio
-                </li>
-            </ul>
+                </div>
+                {% endif %}
+                <div class="media-body">
+                    <h4 class="media-heading">Vidéo</h4>
+                    vidéo
+                </div>
+            </div>
         </div>
         <div>
             <h2>Vidéos populaires</h2>

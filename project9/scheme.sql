@@ -48,9 +48,9 @@ create table videos_tags (
 );
 
 
-INSERT INTO users(username, password, rank)
-       VALUES("admin", "admin", "admin"),
-             ("user", "user", "user");
+INSERT INTO users(username, password, rank, name, bio)
+       VALUES("admin", "admin", "admin", "Kévin", "jeune boloss parisiien du 64 wesh tro cho le mek tavu"),
+             ("user", "user", "user", "Bernard Pivot", "Bernard Pivot, né le 5 mai 1935 à Lyon dans le Rhône, est un journaliste français, animateur d'émissions culturelles à la télévision.");
 
 
 
@@ -95,3 +95,7 @@ insert into videos (title, description, url, thumbnail) values (
     "http://localhost:3000/thumbnails/montreal.png");
 
     -- "tags" : ["city", "people", "town", "view", "mount royal"]
+
+
+INSERT INTO comments
+VALUES(NULL, 1, 1, "wesh tro chelou mec put1 la viiiiid de sa mere");

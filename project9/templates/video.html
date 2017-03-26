@@ -4,20 +4,45 @@
 
 {% block content %}
 
-<h1>{{ video.title }}</h1>
+<div class="row">
+    <div class="col-md-8">
+        <h1>{{ video.title }}</h1>
+        <div style="padding: 15px;">
+            <video poster="{{video.thumbnail }}" controls>
+                <source src="{{ video.url }}" type="video/mp4">
+            </video>
+        </div>
+        <p>{{ video.description }}</p>
+        <hr>
+        <h3>Comments</h3>
+        <div class="comments">
+            {% for comment in query_db('SELECT * FROM comments JOIN users AS user ON user.id=comments.user_id WHERE video_id=?', video.id) %}
+            <div class="media">
+                {% if comment.photo %}
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object" src="{{comment.photo}}">
+                    </a>
+                </div>
+                {% endif %}
+                <div class="media-body">
+                    <h4 class="media-heading">{{comment.name}}</h4>
+                    {{comment.content}}
+                </div>
+            </div>
+            {% else %}
+            <p>Sorry, no comments</p>
+            {% endfor %}
+        </div>
+    </div>
 
-<video width="470" height="255" poster="{{video.thumbnail }}" controls>
-    <source src="{{ video.url }}" type="video/mp4">
-</video>
-<p>{{ video.description }}</p>
+    <div class="col-md-4">
+        <h3>While you're at it, why don't you watch all those videos too ?</h3>
+    </div>
+</div>
 
 {% endblock %}
 
 {% block script %}
     {{ super() }}
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        $('table').tablesorter()
-    });
-</script>
 {% endblock %}
