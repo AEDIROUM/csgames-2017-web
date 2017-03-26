@@ -1,19 +1,28 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<form method="post" enctype="multipart/form-data" class="text-center col-md-6 col-md-offset-3">
-    <label>Title:<br>
+<div class="col-md-6 col-md-offset-3">
+  <h2>Upload</h2>
+  <form method="post" enctype="multipart/form-data">
+    <div class="form-input">
+      <label>Title:<br>
         <input name="title" required class="form-control">
-    </label>
-    <br>
-    <label>Description:<br>
+      </label>
+    </div>
+    <div class="form-input">
+      <label>Description:<br>
         <textarea name="description" required class="form-control"></textarea>
-    </label>
-    <br>
-    <label>File:<br>
+      </label>
+    </div>
+    <div class="form-input">
+      <label>File:<br>
         <input type="file" name="video" required>
-    </label>
+      </label>
+    </div>
     <hr>
-    <button class="btn btn-primary"><i class="glyphicon glyphicon-upload"></i> I wanna be a star !</button>
-</form>
+    <div class="form-input" style="text-align: center;">
+      <button class="btn btn-primary"><i class="glyphicon glyphicon-upload"></i> I wanna be a star !</button>
+    </div>
+  </form>
+</div>
 {% endblock %}
