@@ -17,7 +17,8 @@
 
 .comments .media {
     border-left: 4px solid #2B0EAD;
-    padding-left: 5px;
+    padding: 5px;
+    margin: 5px 0;
 }
 
 footer {
