@@ -17,7 +17,7 @@
 
   <h3>Tags</h3>
   <p>
-  {% for tag in video.tags.split(',') %}
+  {% for tag in (video.tags or '').split(',') %}
   <span class="label label-primary">{{ tag }}</span>
   {% endfor %}
   </p>
