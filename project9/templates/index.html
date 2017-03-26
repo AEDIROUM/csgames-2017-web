@@ -12,12 +12,12 @@
             Start today !
         </a>
     </div>
-    <div id="accueil-latest" class="col-md-6">
+    <div class="more-videos col-md-6">
         <div>
             <h2>Derniers visionnages</h2>
             {% for video in query_db('SELECT * FROM videos AS video LEFT JOIN history AS hist ON hist.video_id=video.id ORDER BY last_date DESC LIMIT 3') %}
             
-            <div class="media">
+            <div class="media" data-id="{{ video.id }}">
                 <span class="badge pull-right">{{ query_db('SELECT COUNT(*) AS n FROM history WHERE video_id=?', video.id).fetchone()['n'] }}</span>
                 {% if True %}
                 <div class="media-left">
@@ -37,7 +37,7 @@
             <h2>Vidéos populaires</h2>
             {% for video in query_db('SELECT * FROM videos AS video LEFT JOIN history AS hist ON hist.video_id=video.id GROUP BY video_id ORDER BY COUNT(video_id) DESC LIMIT 3') %}
 
-            <div class="media" data-ref="">
+            <div class="media" data-id="{{ video.id }}">
                 <span class="badge pull-right">{{ query_db('SELECT COUNT(*) AS n FROM history WHERE video_id=?', video.id).fetchone()['n'] }}</span>
                 {% if True %}
                 <div class="media-left">
@@ -56,7 +56,7 @@
         <div>
             <h2>Vidéos récentes</h2>
             {% for video in query_db('SELECT * FROM videos AS video LEFT JOIN history AS hist ON video.id=video_id ORDER BY added DESC LIMIT 3') %}
-            <div class="media">
+            <div class="media" data-id="{{ video.id }}">
                 <span class="badge pull-right">{{ query_db('SELECT COUNT(*) AS n FROM history WHERE video_id=?', video.id).fetchone()['n'] }}</span>
                 {% if True %}
                 <div class="media-left">

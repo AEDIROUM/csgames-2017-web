@@ -13,9 +13,12 @@
     <tbody>
         {% for result in results %}
         <tr>
-            <td><img src="{{ result['thumbnail'] }}" /></td>
+            <td><img style="max-width: 50px" src="{{ result['thumbnail'] }}" /></td>
             <td>{{ result['title'] }}</td>
             <td>{{ result['description'] }}</td>
+            <td class="text-align: center">
+                <span class="badge">{{ query_db('SELECT COUNT(*) AS n FROM history WHERE video_id=?', result['id']).fetchone()['n'] }}</span>
+            </td>
         </tr>
         {% endfor %}
     </tbody>

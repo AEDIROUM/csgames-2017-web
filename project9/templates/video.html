@@ -36,11 +36,11 @@
         </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-4 more-videos">
         <h3>While you're at it, why don't you watch all those videos too ?</h3>
-        {% for video in query_db('SELECT *, COUNT(video_id) AS views FROM history JOIN videos AS video ON video.id=video_id WHERE video_id != ? GROUP BY video_id ORDER BY COUNT(video_id) DESC LIMIT 4', video.id) %}
-        <div class="media">
-            <span class="badge pull-right">{{ video['views'] }}</span>
+        {% for video in query_db('SELECT * FROM videos AS video WHERE video.id != ? ORDER BY RANDOM() DESC LIMIT 5', video.id) %}
+        <div class="media"  data-id="{{ video.id }}">
+            <span class="badge pull-right">{{ query_db('SELECT COUNT(*) AS n FROM history WHERE video_id=?', video.id).fetchone()['n'] }}</span>
             {% if True %}
             <div class="media-left">
                 <a href="#">

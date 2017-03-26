@@ -25,6 +25,11 @@ footer {
     bottom: 0;
     text-align: center;
     width: 100%;
+    opacity: 0.5;
+}
+
+footer:hover {
+    opacity: 1;
 }
 
 video {
@@ -33,9 +38,16 @@ video {
 }
 
 
-#accueil-latest .media {
-
+.more-videos .media {
+    margin-top: 5px;
     border: 1px solid #DDD;
     padding: 15px;
     border-radius: 5px;
+}
+
+.media[data-id]:hover {
+    background-color: #EEE;
+}
+.media[data-id] {
+    cursor: pointer
 }
