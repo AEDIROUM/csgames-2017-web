@@ -42,8 +42,12 @@ def register():
 def users():
     return render_template('users.html', users=query_db('select * from users'))
 
-@app.route('/user/<int:user_id>')
+@app.route('/user/<int:user_id>', methods=['GET', 'POST'])
 def user(user_id):
+    if request.form:
+        query_db('update users set name = ?, bio = ? where id = ?',
+                request.form['name'], request.form['bio'], user_id)
+        return redirect(url_for('user', user_id=user_id))
     return render_template('user.html', user=query_db('select * from users where id = ?', user_id).fetchone())
 
 @app.route('/login', methods=['GET', 'POST'])

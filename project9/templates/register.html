@@ -1,9 +1,18 @@
 {% extends 'layout.html' %}
 
 {% block content %}
+<h2>Register</h2>
 <form method="post">
-  <input name="username" placeholder="Username">
-  <input name="password" placeholder="Password">
-  <input type="submit">
+  <div class="form-input">
+    <label>Username</label>
+    <input class="form-control" name="username" placeholder="Username">
+  </div>
+  <div class="form-input">
+    <label>Password</label>
+    <input class="form-control" name="password" placeholder="Password">
+  </div>
+  <div class="form-input">
+    <button class="btn btn-primary" type="submit">Register</button>
+  </div>
 </form>
 {% endblock %}

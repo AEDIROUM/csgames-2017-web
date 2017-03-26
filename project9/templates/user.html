@@ -2,4 +2,25 @@
 
 {% block content %}
 {{  user }}
+{% if 'edit' in request.args %}
+mode édition
+<form method="post">
+  <div class="form-input">
+    <label>Name</label>
+    <input class="form-control" name="name" value="{{ user.name }}">
+  </div>
+  <div class="form-input">
+    <label>Biography</label>
+    <textarea class="form-control" name="bio">{{ user.bio }}</textarea>
+  </div>
+  <button class="btn btn-primary" type="submit">Edit Profile</button>
+</form>
+{% else %}
+<h2>{{ user.name }}</h2>
+<img src="{{ user.photo }}">
+<h3>Biography</h3>
+<p>{{ user.bio }}</p>
+
+<a class="btn btn-primary" href="?edit">Edit Profile</a>
+{% endif %}
 {%endblock %}
