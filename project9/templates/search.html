@@ -22,6 +22,14 @@
                 <span class="badge">{{ query_db('SELECT COUNT(*) AS n FROM history WHERE video_id=?', result['id']).fetchone()['n'] }}</span>
             </td>
         </tr>
+        {% else %}
+        <tr>
+            <td></td>
+            <td>Oh noes !</td>
+            <td>No result found :(</td>
+            <td>Why not searching for <strong>drone</strong> ? We have good stuff about that</td>
+            <td>You can also <a href="/">take a look at what's <span class="logo-new">New</span>™</a> today</td>
+        </tr>
         {% endfor %}
     </tbody>
 </table>
