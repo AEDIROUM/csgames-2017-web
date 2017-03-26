@@ -114,7 +114,12 @@ insert into videos (title, description, url, thumbnail) values (
 
 
 INSERT INTO comments
-VALUES(NULL, 1, 1, "wesh tro chelou mec put1 la viiiiid de sa mere");
+VALUES(NULL, 1, 1, "wesh tro chelou mec put1 la viiiiid de sa mere"),
+      (NULL, 1, 2, "sa meeeeeeeeere"),
+      (NULL, 1, 2, "trop bien meuf"),
+      (NULL, 1, 3, "wesh wesh"),
+      (NULL, 2, 3, "topkek"),
+      (NULL, 2, 4, "topkek");
 
 INSERT INTO messages(user_id, from_user_id, content)
        VALUES(1, 1, "wesh kévin ces kévin on se conné ptd r!!1"),

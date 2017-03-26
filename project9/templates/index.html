@@ -75,12 +75,3 @@
     </div>
 </div>
 {% endblock %}
-
-{% block script %}
-    {{ super() }}
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        $('table').tablesorter()
-    });
-</script>
-{% endblock %}
