@@ -23,7 +23,7 @@ def serve_thumbnails(path):
 @app.route("/search")
 def search():
     query = '%{}%'.format(request.args['query'])
-    return render_template('search.html', results=query_db('select * from videos where description like ? or title like ?', query, query))
+    return render_template('search.html', results=query_db('select *, group_concat(tag) as tags from videos join video_tags on id = video_tags.video_id where description like ? or title like ? group by id', query, query))
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():

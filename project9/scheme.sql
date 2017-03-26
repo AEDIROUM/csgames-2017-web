@@ -37,14 +37,9 @@ create table videos (
     thumbnail   TEXT
 );
 
-create table tags (
-    id INTEGER NOT NULL PRIMARY KEY,
-    name TEXT
-);
-
-create table videos_tags (
+create table video_tags (
     video_id INTEGER,
-    tag_id   INTEGER
+    tag      TEXT
 );
 
 
@@ -58,13 +53,20 @@ INSERT INTO users(username, password, rank)
 -- WITH RECURSIVE parent(category_id, nom, level) AS (SELECT category_id, name, 0 FROM categories WHERE id=? UNION ALL SELECT categories.category_id, categories.name, parent.level + 1 FROM categories JOIN parent ON parent.category_id=categories.id) SELECT * FROM parent
 
 -- PRAGMA foreign_keys = ON;
-insert into videos (title, description, url, thumbnail) values (
+insert into videos (id, title, description, url, thumbnail) values (
+1,
 "Drone Footage of High Rises in a City",
 "Wow! A drone that flies over a city, that's surreal! ÉTS should buy a drone and make videos with one.",
 "http://localhost:3000/videos/drone.mp4",
 "http://localhost:3000/thumbnails/drone.png");
 
-		-- "tags" : ["city", "skyline", "streets", "high rises", "buildings", "aerial", "drone", "footage"]
+insert into video_tags values (1, "skyline");
+insert into video_tags values (1, "streets");
+insert into video_tags values (1, "high rises");
+insert into video_tags values (1, "buildings");
+insert into video_tags values (1, "aerial");
+insert into video_tags values (1, "drone");
+insert into video_tags values (1, "footage");
 
 insert into videos (title, description, url, thumbnail) values (
 		"Master hacker doing his work",
