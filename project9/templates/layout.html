@@ -40,8 +40,10 @@
                 <button type="submit" class="btn btn-default">Submit</button>
               </form>
               <ul class="nav navbar-nav navbar-right">
+                <li><a href="{{ url_for('upload') }}">Upload</a></li>
                 {% if session.user %}
                 <li><a href="{{ url_for('user', user_id=session.user) }}">{{ query_db('select * from users where id = ?', session.user).fetchone().username }}</a></li>
+                <li><a href="/logout">Logout</a></li>
                 {% else %}
                 <li><a href="/login">Login</a></li>
                 <li><a href="/register">Register</a></li>
