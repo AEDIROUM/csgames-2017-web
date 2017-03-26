@@ -10,9 +10,13 @@ def index():
 
     return render_template('index.html', test=1)
 
-@app.route("/video/<int:video_id>")
+@app.route("/video/<int:video_id>", methods=['GET', 'POST'])
 def video(video_id):
     user_id = session['user'] if 'user' in session else None
+
+    if request.form:
+        query_db('insert into comments (user_id, video_id, content) values (?,?,?)', user_id, video_id, request.form['content'])
+        return redirect(url_for('video', video_id=video_id))
 
     query_db('INSERT INTO history(user_id, video_id) VALUES(?, ?)', user_id, video_id)
 
