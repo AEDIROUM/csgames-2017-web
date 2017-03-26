@@ -6,8 +6,8 @@
         <tr>
             <th></th>
             <th>Title</th>
-            <th>Description</th>
-            <th>Tags</th>
+            <th class="hidden-xs">Description</th>
+            <th class="hidden-xs">Tags</th>
             <th>Views</th>
         </tr>
     </thead>
@@ -16,8 +16,8 @@
         <tr data-id="{{ result.id }}">
             <td><img style="max-width: 50px" src="{{ result['thumbnail'] }}" /></td>
             <td>{{ result['title'] }}</td>
-            <td>{{ result['description'] }}</td>
-            <td>{{ result.tags or '' }}</td>
+            <td class="hidden-xs">{{ result['description'] }}</td>
+            <td class="hidden-xs">{{ result.tags or '' }}</td>
             <td class="text-align: center">
                 <span class="badge">{{ query_db('SELECT COUNT(*) AS n FROM history WHERE video_id=?', result['id']).fetchone()['n'] }}</span>
             </td>
@@ -26,9 +26,9 @@
         <tr>
             <td></td>
             <td>Oh noes !</td>
-            <td>No result found :(</td>
-            <td>Why not searching for <strong>drone</strong> ? We have good stuff about that</td>
-            <td>You can also <a href="/">take a look at what's <span class="logo-new">New</span>™</a> today</td>
+            <td class="hidden-xs">No result found :(</td>
+            <td class="hidden-xs">Why not searching for <strong>drone</strong> ? We have good stuff about that</td>
+            <td>You can always <a href="/">take a look at what's <span class="logo-new">New</span>™</a> today</td>
         </tr>
         {% endfor %}
     </tbody>
