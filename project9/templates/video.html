@@ -6,7 +6,7 @@
 
 <div class="row">
     <div class="col-md-8">
-        <h1>{{ video.title }}</h1>
+        <h1>{{ video.title }} <span class="badge">{{ query_db('SELECT COUNT(id) AS n FROM history WHERE video_id=?', video.id).fetchone().n }}</span></h1>
         <div style="padding: 15px;">
             <video poster="{{video.thumbnail }}" controls>
                 <source src="{{ video.url }}" type="video/mp4">
@@ -38,6 +38,22 @@
 
     <div class="col-md-4">
         <h3>While you're at it, why don't you watch all those videos too ?</h3>
+        {% for video in query_db('SELECT *, COUNT(video_id) AS views FROM history JOIN videos AS video ON video.id=video_id WHERE video_id != ? GROUP BY video_id ORDER BY COUNT(video_id) DESC LIMIT 4', video.id) %}
+        <div class="media">
+            <span class="badge pull-right">{{ video['views'] }}</span>
+            {% if True %}
+            <div class="media-left">
+                <a href="#">
+                    <img class="media-object" style="max-width: 90px" src="{{ video.thumbnail }}" />
+                </a>
+            </div>
+            {% endif %}
+            <div class="media-body">
+                <h4 class="media-heading">{{ video.title }}</h4>
+                {{ video.description }}
+            </div>
+        </div>
+        {% endfor %}
     </div>
 </div>
 

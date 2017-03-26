@@ -31,3 +31,11 @@ video {
     width: 100%;
     border-radius: 0 25px 0 0;
 }
+
+
+#accueil-latest .media {
+
+    border: 1px solid #DDD;
+    padding: 15px;
+    border-radius: 5px;
+}

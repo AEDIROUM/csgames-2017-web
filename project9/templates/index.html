@@ -15,46 +15,62 @@
     <div id="accueil-latest" class="col-md-6">
         <div>
             <h2>Derniers visionnages</h2>
+            {% for video in query_db('SELECT * FROM videos AS video LEFT JOIN history AS hist ON hist.video_id=video.id ORDER BY last_date DESC LIMIT 3') %}
+            
             <div class="media">
-                <span class="badge pull-right">14</span>
+                <span class="badge pull-right">{{ query_db('SELECT COUNT(*) AS n FROM history WHERE video_id=?', video.id).fetchone()['n'] }}</span>
                 {% if True %}
                 <div class="media-left">
                     <a href="#">
-                        <img class="media-object" src="src="{{ url_for('static', filename='img/thumbs/drone.png') }}>
+                        <img class="media-object" style="max-width: 90px" src="{{ video.thumbnail }}" />
                     </a>
                 </div>
                 {% endif %}
                 <div class="media-body">
-                    <h4 class="media-heading">Vidéo</h4>
-                    vidéo
+                    <h4 class="media-heading">{{ video.title }}</h4>
+                    {{ video.description }}
                 </div>
             </div>
+            {% endfor %}
         </div>
         <div>
             <h2>Vidéos populaires</h2>
-            <ul class="list-group">
-                <li class="list-group-item">
-                    <span class="badge">14</span>
-                    Cras justo odio
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">14</span>
-                    Cras justo odio
-                </li>
-            </ul>
+            {% for video in query_db('SELECT * FROM videos AS video LEFT JOIN history AS hist ON hist.video_id=video.id GROUP BY video_id ORDER BY COUNT(video_id) DESC LIMIT 3') %}
+
+            <div class="media" data-ref="">
+                <span class="badge pull-right">{{ query_db('SELECT COUNT(*) AS n FROM history WHERE video_id=?', video.id).fetchone()['n'] }}</span>
+                {% if True %}
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object" style="max-width: 90px" src="{{ video.thumbnail }}" />
+                    </a>
+                </div>
+                {% endif %}
+                <div class="media-body">
+                    <h4 class="media-heading">{{ video.title }}</h4>
+                    {{ video.description }}
+                </div>
+            </div>
+            {% endfor %}
         </div>
         <div>
             <h2>Vidéos récentes</h2>
-            <ul class="list-group">
-                <li class="list-group-item">
-                    <span class="badge">14</span>
-                    Cras justo odio
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">14</span>
-                    Cras justo odio
-                </li>
-            </ul>
+            {% for video in query_db('SELECT * FROM videos AS video LEFT JOIN history AS hist ON video.id=video_id ORDER BY added DESC LIMIT 3') %}
+            <div class="media">
+                <span class="badge pull-right">{{ query_db('SELECT COUNT(*) AS n FROM history WHERE video_id=?', video.id).fetchone()['n'] }}</span>
+                {% if True %}
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object" style="max-width: 90px" src="{{ video.thumbnail }}" />
+                    </a>
+                </div>
+                {% endif %}
+                <div class="media-body">
+                    <h4 class="media-heading">{{ video.title }}</h4>
+                    {{ video.description }}
+                </div>
+            </div>
+            {% endfor %}
         </div>
     </div>
 </div>

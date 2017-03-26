@@ -1,6 +1,7 @@
 from project9 import app, query_db
 from flask import request, redirect, url_for, render_template, g, jsonify, flash, session, send_from_directory
 import random
+import time
 
 
 @app.route("/")
@@ -10,6 +11,10 @@ def index():
 
 @app.route("/video/<int:video_id>")
 def video(video_id):
+    user_id = session['user'] if 'user' in session else None
+
+    query_db('INSERT INTO history(user_id, video_id) VALUES(?, ?)', user_id, video_id)
+    
     return render_template('video.html', video=query_db('SELECT * FROM videos WHERE id=?', video_id).fetchone())
 
 @app.route('/videos/<path:path>')

@@ -24,9 +24,9 @@ CREATE TABLE comments(
 
 CREATE TABLE history(
     id INTEGER NOT NULL PRIMARY KEY,
-    user_id INTEGER NOT NULL,
+    user_id INTEGER,
     video_id INTEGER NOT NULL,
-    last_date INTEGER NOT NULL
+    last_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 create table videos (
@@ -34,7 +34,8 @@ create table videos (
     title       TEXT,
     description TEXT,
     url         TEXT,
-    thumbnail   TEXT
+    thumbnail   TEXT,
+    added       TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 create table video_tags (
