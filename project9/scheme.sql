@@ -77,7 +77,18 @@ insert into videos (title, description, url, thumbnail) values (
 		"http://localhost:3000/videos/hackertype.mp4",
 		"http://localhost:3000/thumbnails/hackertype.png");
 
-		-- "tags" : ["matrix", "code", "hacker", "hacking", "terminal", "console", "programming", "program", "coding", "computer", "technology", "pc"]
+insert into video_tags values (2, "matrix");
+insert into video_tags values (2, "code");
+insert into video_tags values (2, "hacker");
+insert into video_tags values (2, "hacking");
+insert into video_tags values (2, "terminal");
+insert into video_tags values (2, "console");
+insert into video_tags values (2, "programming");
+insert into video_tags values (2,"program");
+insert into video_tags values (2,"coding");
+insert into video_tags values (2,"computer");
+insert into video_tags values (2, "technology");
+insert into video_tags values (2, "pc");
 
 insert into videos (title, description, url, thumbnail) values (
 		"A person working on a MacBook",
