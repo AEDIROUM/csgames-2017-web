@@ -119,3 +119,7 @@ VALUES(NULL, 1, 1, "wesh tro chelou mec put1 la viiiiid de sa mere");
 INSERT INTO messages(user_id, from_user_id, content)
        VALUES(1, 1, "wesh kévin ces kévin on se conné ptd r!!1"),
              (1, 2, "Excuse-moi petit, mais tu devrais soigner ton orthographe...");
+
+INSERT INTO history(user_id, video_id)
+       VALUES (1,1), (1,2), (1,3), (1,4),
+              (2,1), (2,2);

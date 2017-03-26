@@ -8,12 +8,13 @@
     <div class="col-md-8">
         <h1>{{ video.title }} <span class="badge">{{ query_db('SELECT COUNT(id) AS n FROM history WHERE video_id=?', video.id).fetchone().n }}</span></h1>
         <div style="padding: 15px;">
-            <video poster="{{video.thumbnail }}" controls>
+            <video id="the-video" poster="{{video.thumbnail }}" controls>
                 <source src="{{ video.url }}" type="video/mp4">
             </video>
         </div>
         <p>{{ video.description }}</p>
         <hr>
+        <p><label>Copy url at <span id="video-time"></span> : <input id="video-url" class="form-control"></label></p>
 
   <h3>Tags</h3>
   <p>
@@ -55,6 +56,10 @@
               <textarea class="form-control" name="content"></textarea>
               <button class="btn btn-primary">Comment</button>
             </form>
+            {% else %}
+            <a href="/login" class="btn btn-primary">
+                Login to comment !
+            </a>
             {%endif %}
         </div>
     </div>
@@ -83,5 +88,22 @@
 {% endblock %}
 
 {% block script %}
-    {{ super() }}
+{{ super() }}
+<script>
+    var vid;
+    document.addEventListener('DOMContentLoaded', function() {
+        vid = document.getElementById("the-video");
+        
+        if(window.location.search.substr(1)) {
+            vid.addEventListener('loadedmetadata', function() {
+                this.currentTime = window.location.search.substr(1);
+            }, false);
+        }
+        setInterval(function() {
+            var time = Math.floor(vid.currentTime);
+            $('#video-time').text(time + 's');
+            $('#video-url').val(window.location + '?' + time);
+        }, 1000);
+    });    
+</script>
 {% endblock %}
