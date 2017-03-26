@@ -43,8 +43,11 @@ def upload():
         print(request.files)
         file = request.files['video']
         file.save(os.path.join('videos', secure_filename(file.filename)))
-        cur = query_db('insert into videos (title, description, url) values (?, ?, ?)',
-                request.form['title'], request.form['description'], 'http://localhost:3000/videos/' + secure_filename(file.filename))
+        cur = query_db('insert into videos (title, description, url, thumbnail) values (?, ?, ?, ?)',
+                request.form['title'],
+                request.form['description'],
+                'http://localhost:3000/videos/' + secure_filename(file.filename),
+                'http://localhost:3000/thumbnails/default.png')
         return redirect(url_for('video', video_id=cur.lastrowid))
     return render_template('upload.html')
 

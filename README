@@ -1,0 +1,44 @@
+Features!
+
+ - créer un utilisateur
+ - connexion et déconnexoin
+ - profil d'un usager
+ - messagerie privée entre usagers
+ - historique de visionnement de l'usager
+
+ - recherche par titre et description
+ - miniature dans les résultats
+ - recherche avec autocomplétion
+
+ - téléverser une vidéo (titre, description)
+ - vidéo stockée localement
+
+Page vidéo
+
+ - lecteur vidéo!
+ - description
+ - nombre de vues
+ - partager sur Facebook et Twitter
+
+Commentaires
+
+ - commentaires sur la page vidéo
+
+Accueil
+
+ - vidéos récemment visionnée
+ - vidéos plus populaires
+ - vidéos téléversés récemment
+
+Divers
+
+ - partager un URL à un temps spécifié (en cours...)
+ - beau site! (oui!)
+ - responsive
+
+Ça fonctionne!
+
+ - install.sh roule pip3
+ - run.sh roule run.py sur le port 3000 (attention!)
+ - pas d'erreur :)
+
