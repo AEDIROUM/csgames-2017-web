@@ -102,7 +102,7 @@
         setInterval(function() {
             var time = Math.floor(vid.currentTime);
             $('#video-time').text(time + 's');
-            $('#video-url').val(window.location + '?' + time);
+            $('#video-url').val('http://' + window.location.host + '/video/{{ video.id }}?' + time);
         }, 1000);
     });    
 </script>
