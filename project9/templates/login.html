@@ -3,16 +3,17 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-<h2>Login</h2>
-<form method="POST" action="">
+<form method="post" class="col-md-4 col-md-offset-4">
+    <h2>Login</h2>
     <div class="field">
-        <label>Email
+        <label>Email<br>
             <input type="text" name="username" required>
         </label><br />
-        <label>Password
+        <label>Password<br>
             <input type="password" name="password" required>
         </label>
     </div>
+    <br>
     <button type="submit" class="btn btn-success">
         <i class="glyphicon glyphicon-user"></i> Login
     </button>

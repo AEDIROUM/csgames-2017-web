@@ -1,18 +1,19 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<h2>Register</h2>
-<form method="post">
-  <div class="form-input">
-    <label>Username</label>
-    <input class="form-control" name="username" placeholder="Username" required>
-  </div>
-  <div class="form-input">
-    <label>Password</label>
-    <input class="form-control" name="password" placeholder="Password" required>
-  </div>
-  <div class="form-input">
-    <button class="btn btn-primary" type="submit">Register</button>
-  </div>
+<form method="post" class="col-md-4 col-md-offset-4">
+    <h2>Register</h2>
+    <div class="form-input">
+        <label>Username</label>
+        <input class="form-control" name="username" placeholder="Username" required>
+    </div>
+    <div class="form-input">
+        <label>Password</label>
+        <input class="form-control" name="password" placeholder="Password" required>
+    </div>
+    <br>
+    <div class="form-input text-center">
+        <button class="btn btn-primary" type="submit">Take me to the world<br>of New™ Internet Videos !</button>
+    </div>
 </form>
 {% endblock %}
