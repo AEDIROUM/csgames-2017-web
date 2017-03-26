@@ -41,7 +41,7 @@
               </form>
               <ul class="nav navbar-nav navbar-right">
                 {% if session.user %}
-                <li><a href="#">{{ query_db('select * from users where id = ?', session.user).fetchone().email }}</a></li>
+                <li><a href="{{ url_for('user', user_id=session.user) }}">{{ query_db('select * from users where id = ?', session.user).fetchone().username }}</a></li>
                 {% else %}
                 <li><a href="/login">Login</a></li>
                 <li><a href="/register">Register</a></li>
