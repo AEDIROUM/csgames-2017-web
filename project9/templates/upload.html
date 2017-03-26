@@ -2,9 +2,9 @@
 
 {% block content %}
 <form method="post" enctype="multipart/form-data">
-  <input name="title">
-  <textarea name="description"></textarea>
-  <input type="file" name="video">
+  <input name="title" required>
+  <textarea name="description" required></textarea>
+  <input type="file" name="video" required>
   <button>Upload</button>
 </form>
 {% endblock %}
